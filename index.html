@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Business Operating System Pro</title>
+<style>
+:root{--bg:#f3f5fb;--card:#fff;--text:#1b2437;--mut:#6b7590;--acc:#4f46e5;--acc2:#7c3aed;--bd:#e3e7f1;--ok:#16a34a;--warn:#d97706;--bad:#dc2626}
+body.dark{--bg:#0e1322;--card:#171e33;--text:#eef1fa;--mut:#98a2c0;--acc:#818cf8;--acc2:#a78bfa;--bd:#28314d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);transition:.25s}
+.app{display:flex;min-height:100vh}
+aside{width:250px;background:var(--card);border-right:1px solid var(--bd);padding:20px 14px;position:sticky;top:0;height:100vh;overflow:auto;flex-shrink:0}
+.logo{font-weight:800;font-size:18px;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;margin:0 8px 18px}
+.nav button{display:block;width:100%;text-align:left;background:none;color:var(--text);border:0;padding:10px 12px;border-radius:9px;cursor:pointer;font-size:14px;margin-bottom:3px}
+.nav button:hover{background:var(--bg)}.nav button.on{background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff}
+.nav small{display:block;margin:14px 12px 6px;color:var(--mut);text-transform:uppercase;font-size:11px;letter-spacing:.08em}
+main{flex:1;padding:26px;min-width:0;max-width:1200px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:10px;flex-wrap:wrap}
+h1{margin:0;font-size:24px}h2{margin:0 0 4px;font-size:17px}p.sub{color:var(--mut);margin:4px 0 0;font-size:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 4px 16px rgba(20,30,60,.05)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--text);font:inherit;font-size:14px}
+textarea{min-height:110px;resize:vertical}textarea.big{min-height:300px;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);border-color:transparent}
+.btn{background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;border:0;padding:10px 16px;border-radius:9px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{opacity:.9}.btn.ghost{background:var(--bg);color:var(--text);border:1px solid var(--bd)}.btn.sm{padding:6px 10px;font-size:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.item{border:1px solid var(--bd);border-radius:11px;padding:13px;background:var(--bg);display:flex;flex-direction:column;gap:6px}
+.item b{font-size:14px}.item span{font-size:12px;color:var(--mut)}
+.tag{display:inline-block;background:var(--acc);color:#fff;border-radius:20px;padding:2px 9px;font-size:11px;width:fit-content}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.stat div{background:var(--bg);border:1px solid var(--bd);border-radius:11px;padding:12px}.stat b{font-size:22px;display:block}.stat span{font-size:12px;color:var(--mut)}
+.bar{height:12px;background:var(--bg);border:1px solid var(--bd);border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:.4s}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;border-bottom:1px solid var(--bd);text-align:left;white-space:nowrap}th{color:var(--mut);font-size:11px;text-transform:uppercase}
+.scroll{overflow:auto;max-height:340px;border:1px solid var(--bd);border-radius:10px}
+.view{display:none}.view.on{display:block}
+.hot{color:var(--ok);font-weight:700}.cold{color:var(--bad)}.warm{color:var(--warn)}
+#toast{position:fixed;bottom:22px;right:22px;background:var(--text);color:var(--bg);padding:11px 18px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none;z-index:9}#toast.on{opacity:1}
+@media(max-width:860px){.app{flex-direction:column}aside{width:100%;height:auto;position:static}.nav{display:flex;flex-wrap:wrap;gap:4px}.nav small{display:none}.nav button{width:auto}.grid{grid-template-columns:1fr}main{padding:16px}}
+@media print{aside,.top,.row{display:none}}
+</style></head><body>
+<div class="app">
+<aside><div class="logo">⚡ Bryant's Real Estate   AI Business OS Pro</div><div class="nav" id="nav"></div></aside>
+<main>
+<div class="top"><div><h1 id="vt">Generators</h1><p class="sub" id="vs"></p></div>
+<div class="row" style="margin:0"><button class="btn ghost" onclick="dark()">🌓 Dark Mode</button></div></div>
+
+<!-- GENERATOR -->
+<section class="view" id="v-gen"><div class="grid">
+<div class="card"><h2 id="gname"></h2><p class="sub" id="gdesc"></p>
+<div id="gfields"></div>
+<label>Audience</label><input id="aud" placeholder="e.g. First-time home buyers">
+<label>Goal</label><select id="goal"><option>Generate leads</option><option>Book appointments</option><option>Increase sales</option><option>Build awareness</option><option>Educate audience</option><option>Drive engagement</option></select>
+<label>Tone</label><select id="tone"><option>Professional</option><option>Conversational</option><option>Luxury</option><option>Friendly</option><option>Urgent</option><option>Persuasive</option><option>Educational</option></select>
+<label>Length</label><select id="len"><option>Short</option><option selected>Medium</option><option>Long</option></select>
+<label>Call to action</label><input id="cta" placeholder="Schedule a free consultation">
+<label>Extra details</label><textarea id="det" placeholder="Anything else the AI should know..."></textarea>
+<div class="row"><button class="btn" onclick="gen()">✨ Generate Prompt</button></div></div>
+<div class="card"><h2>Generated Prompt</h2><textarea class="big" id="out"></textarea>
+<div class="row"><button class="btn sm" onclick="cp('out')">Copy</button><button class="btn sm ghost" onclick="txt('out')">TXT</button><button class="btn sm ghost" onclick="pdf('out')">PDF</button><button class="btn sm ghost" onclick="save('out')">💾 Save</button><button class="btn sm ghost" onclick="toOpt('out')">Optimize →</button></div>
+<div style="margin-top:14px"><b id="sc">Score: –</b><div class="bar"><i id="scb" style="width:0"></i></div></div></div></div></section>
+
+<!-- MARKETPLACE -->
+<section class="view" id="v-mkt"><div class="card"><div class="grid"><div><label>Search <span id="cnt"></span></label><input id="q" placeholder="Search 500+ prompts..." oninput="mkt()"></div>
+<div><label>Category</label><select id="mc" onchange="mkt()"></select></div></div></div>
+<div class="g3" id="mlist"></div><div class="row" style="justify-content:center"><button class="btn ghost" id="more" onclick="page+=1;mkt(1)">Load more</button></div></section>
+
+<!-- LIBRARY -->
+<section class="view" id="v-lib"><div class="card"><div class="grid"><div><label>Search saved</label><input id="lq" oninput="lib()"></div>
+<div><label>Local database</label><div class="row" style="margin:0"><button class="btn sm ghost" onclick="allTxt()">Export all TXT</button><button class="btn sm ghost" onclick="bk()">Backup JSON</button><button class="btn sm ghost" onclick="document.getElementById('rf').click()">Restore</button><input type="file" id="rf" accept=".json" hidden onchange="rs(this)"></div></div></div></div>
+<div class="g3" id="llist"></div></section>
+
+<!-- OPTIMIZER -->
+<section class="view" id="v-opt"><div class="grid"><div class="card"><h2>Your prompt</h2><textarea class="big" id="oin" placeholder="Paste any prompt..." oninput="score('oin','osc','osb','otips')"></textarea>
+<div class="row"><button class="btn" onclick="optim()">🚀 Optimize</button></div></div>
+<div class="card"><h2>Prompt Score</h2><b id="osc">–</b><div class="bar"><i id="osb" style="width:0"></i></div><div id="otips" class="sub"></div>
+<h2 style="margin-top:18px">Optimized</h2><textarea class="big" id="oout" style="min-height:200px"></textarea>
+<div class="row"><button class="btn sm" onclick="cp('oout')">Copy</button><button class="btn sm ghost" onclick="txt('oout')">TXT</button><button class="btn sm ghost" onclick="pdf('oout')">PDF</button><button class="btn sm ghost" onclick="save('oout')">💾 Save</button></div></div></div></section>
+
+<!-- CSV -->
+<section class="view" id="v-csv"><div class="card"><h2>Upload a lead list (CSV)</h2><p class="sub">Processed locally in your browser. Nothing is uploaded.</p>
+<input type="file" id="cf" accept=".csv,text/csv" onchange="csvFile(this)"><label>…or paste CSV</label><textarea id="cp" style="min-height:80px" placeholder="name,email,phone,city"></textarea>
+<div class="row"><button class="btn" onclick="csvGo(document.getElementById('cp').value)">Analyze</button></div></div>
+<div id="cres"></div></section>
+</main></div><div id="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const toast=m=>{$('toast').textContent=m;$('toast').classList.add('on');setTimeout(()=>$('toast').classList.remove('on'),1800)};
+
+/* ---------- Tool definitions ---------- */
+const TOOLS={
+re:{n:'Real Estate Suite',d:'General real estate marketing & client communication.',role:'top-producing real estate marketing strategist',f:[['Market / area','Raleigh, NC'],['Service','Buyer representation']]},
+list:{n:'Listing Description Generator',d:'MLS-ready property descriptions.',role:'luxury real estate copywriter',f:[['Address','123 Oak St'],['Beds / baths / sqft','4 bd / 3 ba / 2,400 sqft'],['Price','$525,000'],['Key features','Updated kitchen, large lot']]},
+exp:{n:'Expired Listing Generator',d:'Scripts, letters and emails for expired listings.',role:'expired-listing prospecting expert',f:[['Property address','123 Oak St'],['Days on market','94'],['Original list price','$550,000'],['Your unique value','Pro photos, 3D tour']]},
+fsbo:{n:'FSBO Generator',d:'Outreach to For-Sale-By-Owner sellers.',role:'FSBO conversion specialist',f:[['Seller situation','Selling without an agent'],['Your edge','Buyer network, negotiation'],['Channel','Phone, mail, email']]},
+cma:{n:'CMA Generator',d:'Comparative market analysis narrative & presentation.',role:'real estate appraiser and CMA presentation expert',f:[['Subject property','123 Oak St, 3bd/2ba'],['Comparable sales','456 Elm $510k; 789 Pine $498k'],['Market trend','Prices up 3% YoY']]},
+mkt:{n:'Marketing Campaign Builder',d:'Full multi-channel campaign plans.',role:'chief marketing officer',f:[['Product / offer','Home valuation service'],['Budget','$2,000/mo'],['Duration','30 days']]},
+soc:{n:'Social Media Content Engine',d:'Calendars, posts, hooks and captions.',role:'social media strategist',f:[['Platform','Instagram, Facebook, LinkedIn'],['Content pillars','Tips, listings, testimonials'],['Posts needed','14']]},
+eml:{n:'Email Campaign Builder',d:'Subject lines, sequences and newsletters.',role:'email marketing and copywriting expert',f:[['Sequence length','5 emails'],['Offer','Free buyer guide'],['Send cadence','Every 2 days']]}
+};
+let cur='list';
+function setTool(k){cur=k;const t=TOOLS[k];$('gname').textContent=t.n;$('gdesc').textContent=t.d;
+ $('gfields').innerHTML=t.f.map((f,i)=>`<label>${f[0]}</label><input id="f${i}" placeholder="${esc(f[1])}">`).join('')}
+function gen(){const t=TOOLS[cur];
+ const fl=t.f.map((f,i)=>`- ${f[0]}: ${$('f'+i).value||'[not provided]'}`).join('\n');
+ const p=`Act as a ${t.role} with 15+ years of experience.
+
+TASK: Create a ${t.n.replace(' Generator','').replace(' Builder','')} deliverable.
+
+CONTEXT
+${fl}
+- Target audience: ${$('aud').value||'[not provided]'}
+- Primary goal: ${$('goal').value}
+- Tone: ${$('tone').value}
+- Length: ${$('len').value}
+- Call to action: ${$('cta').value||'[not provided]'}
+- Additional details: ${$('det').value||'none'}
+
+REQUIREMENTS
+1. Open with a strong hook that speaks to the audience's main pain point or desire.
+2. Use specific, concrete language; avoid clichés and filler.
+3. Handle likely objections and build trust with proof points.
+4. Keep the tone ${$('tone').value.toLowerCase()} throughout.
+5. End with a clear, compelling call to action.
+
+OUTPUT FORMAT
+Provide the final deliverable first, then 2 alternate variations, then 3 optimization tips. Use clear headings.`;
+ $('out').value=p;score('out','sc','scb');}
+
+/* ---------- Score & optimizer ---------- */
+function analyze(t){const l=t.toLowerCase(),c=[
+['Defines a role / persona',/act as|you are|as a /.test(l),15],['States a clear task',/task|create|write|generate|build|develop/.test(l),15],
+['Names the audience',/audience|for (home|first|buyers|sellers|customers)|target/.test(l),12],['States a goal',/goal|objective|purpose|aim/.test(l),10],
+['Specifies tone / style',/tone|style|voice/.test(l),8],['Defines output format',/format|output|bullet|table|headings|steps/.test(l),12],
+['Includes constraints / requirements',/must|avoid|requirement|do not|limit|only/.test(l),8],['Includes a call to action',/call to action|cta/.test(l),5],
+['Adequate detail (60+ words)',t.trim().split(/\s+/).length>=60,10],['Provides context / examples',/context|example|background|details/.test(l),5]];
+ return{s:c.reduce((a,x)=>a+(x[1]?x[2]:0),0),miss:c.filter(x=>!x[1]).map(x=>x[0])}}
+function score(src,sc,sb,tips){const t=$(src).value;if(!t.trim()){$(sc).textContent='Score: –';$(sb).style.width=0;if(tips)$(tips).innerHTML='';return}
+ const r=analyze(t);$(sc).textContent='Score: '+r.s+'/100 '+(r.s>=80?'🔥 Excellent':r.s>=55?'👍 Good':'⚠️ Needs work');$(sb).style.width=r.s+'%';
+ if(tips)$(tips).innerHTML=r.miss.length?'<b>Missing:</b> '+r.miss.join(' · '):'All key elements present.'}
+function optim(){let t=$('oin').value.trim();if(!t)return toast('Paste a prompt first');const l=t.toLowerCase();let o='';
+ if(!/act as|you are/.test(l))o+='Act as a world-class expert in this field with 15+ years of experience.\n\n';
+ o+='TASK:\n'+t+'\n\n';
+ if(!/audience/.test(l))o+='AUDIENCE: [Describe who this is for, including their main pain points]\n\n';
+ if(!/goal|objective/.test(l))o+='GOAL: [Define the single measurable outcome]\n\n';
+ if(!/tone|style/.test(l))o+='TONE: [Professional / Friendly / Persuasive]\n\n';
+ o+='REQUIREMENTS:\n- Be specific and concrete; avoid filler.\n- Support claims with reasons or examples.\n- Anticipate and address objections.\n- Ask me clarifying questions if information is missing.\n\n';
+ if(!/format|output/.test(l))o+='OUTPUT FORMAT:\nClear headings, short paragraphs, then a 3-bullet summary and next steps.\n';
+ $('oout').value=o.trim();const r=analyze(o);toast('Optimized: '+r.s+'/100')}
+function toOpt(id){$('oin').value=$(id).value;go('opt');score('oin','osc','osb','otips')}
+
+/* ---------- Preloaded prompt library (500+ generated) ---------- */
+const CATS={
+'Real Estate':{r:'real estate expert',t:['Listing description','Open house promotion','Buyer follow-up sequence','Seller consultation script','Just-sold announcement','Neighborhood guide','Referral request','Market update report']},
+'Expired Listings':{r:'expired listing specialist',t:['Cold call script','Handwritten letter','Email sequence','Voicemail script','Objection handling','Text message series']},
+'FSBO':{r:'FSBO conversion expert',t:['Door-knock script','Follow-up email','Value proposition letter','Phone script','Objection responses','Pricing conversation']},
+'CMA':{r:'market analyst',t:['CMA summary narrative','Pricing strategy explanation','Comparable sales write-up','Market trends report','Price reduction conversation','Seller presentation outline']},
+'Marketing':{r:'chief marketing officer',t:['30-day campaign plan','Landing page copy','Brand story','Lead magnet idea','Ad copy set','Competitor analysis','Launch plan']},
+'Social Media':{r:'social media strategist',t:['Content calendar','Viral hooks','Carousel outline','Short video script','Caption set','Engagement post ideas','Story sequence']},
+'Email':{r:'email marketing expert',t:['Welcome sequence','Newsletter','Re-engagement campaign','Subject line set','Promo email','Nurture drip','Event invite']},
+'Sales':{r:'B2C sales coach',t:['Discovery call script','Cold outreach message','Follow-up cadence','Proposal summary','Closing script','Objection handling guide']},
+'YouTube':{r:'YouTube content strategist',t:['Video script','Title and thumbnail ideas','Channel strategy','Video description','Shorts script','Series outline']},
+'Business':{r:'business consultant',t:['SWOT analysis','90-day plan','SOP document','KPI dashboard design','Pricing strategy','Hiring plan']},
+'Customer Service':{r:'customer experience lead',t:['Complaint response','FAQ set','Review reply','Onboarding message','Win-back message','Service script']},
+'Productivity':{r:'operations coach',t:['Weekly planner','Delegation brief','Meeting agenda','Process audit','Goal-setting framework','Automation ideas']}};
+const ANG=['for beginners','for luxury clients','for busy professionals','with a data-driven approach','with a storytelling approach','with an urgent, time-sensitive angle','focused on trust and credibility','optimized for conversions'];
+const PROMPTS=[];let pid=0;
+Object.entries(CATS).forEach(([c,o])=>o.t.forEach(t=>ANG.forEach(a=>PROMPTS.push({id:++pid,c,title:`${t} ${a}`,
+ text:`Act as a ${o.r}.\n\nTASK: Create a ${t.toLowerCase()} ${a}.\n\nAUDIENCE: [Describe your audience]\nGOAL: [Your primary goal]\nTONE: [Desired tone]\nDETAILS: [Business, offer, location, proof points]\n\nREQUIREMENTS:\n- Lead with a strong hook.\n- Be specific and actionable.\n- Address common objections.\n- End with a clear call to action.\n\nOUTPUT: Final deliverable, 2 variations, and 3 improvement tips.`}))));
+let page=1;const PS=24;
+function mkt(more){if(!more)page=1;const q=$('q').value.toLowerCase(),c=$('mc').value;
+ const r=PROMPTS.filter(p=>(!c||p.c===c)&&(!q||(p.title+p.c+p.text).toLowerCase().includes(q)));
+ $('cnt').textContent=`(${r.length} of ${PROMPTS.length})`;
+ $('mlist').innerHTML=r.slice(0,page*PS).map(p=>`<div class="item"><span class="tag">${p.c}</span><b>${esc(p.title)}</b><div class="row" style="margin:4px 0 0"><button class="btn sm" onclick="useP(${p.id})">Use</button><button class="btn sm ghost" onclick="saveP(${p.id})">Save</button><button class="btn sm ghost" onclick="cpT(${p.id})">Copy</button></div></div>`).join('')||'<p class="sub">No prompts found.</p>';
+ $('more').style.display=r.length>page*PS?'':'none'}
+const P=i=>PROMPTS.find(p=>p.id===i);
+function useP(i){$('out').value=P(i).text;go('gen');score('out','sc','scb')}
+function saveP(i){addLib(P(i).title,P(i).text)}function cpT(i){navigator.clipboard?.writeText(P(i).text);toast('Copied')}
+
+/* ---------- Library / local DB ---------- */
+function addLib(title,text){const l=LS.get('lib',[]);l.unshift({id:Date.now(),title,text,date:new Date().toLocaleDateString()});LS.set('lib',l.slice(0,500));toast('Saved to library')}
+function save(id){const t=$(id).value.trim();if(!t)return toast('Nothing to save');addLib(t.split('\n').find(x=>x.trim()&&!/^act as/i.test(x))?.slice(0,60)||t.slice(0,60),t)}
+function lib(){const q=$('lq').value.toLowerCase(),l=LS.get('lib',[]).filter(x=>(x.title+x.text).toLowerCase().includes(q));
+ $('llist').innerHTML=l.map(x=>`<div class="item"><b>${esc(x.title)}</b><span>${x.date} · ${x.text.split(/\s+/).length} words</span><div class="row" style="margin:4px 0 0"><button class="btn sm" onclick="ld(${x.id})">Open</button><button class="btn sm ghost" onclick="del(${x.id})">Delete</button></div></div>`).join('')||'<p class="sub">No saved templates yet. Save from the generator, marketplace, or optimizer.</p>'}
+function ld(i){$('out').value=LS.get('lib',[]).find(x=>x.id===i).text;go('gen');score('out','sc','scb')}
+function del(i){LS.set('lib',LS.get('lib',[]).filter(x=>x.id!==i));lib()}
+function dl(name,data,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click()}
+function allTxt(){dl('prompt-library.txt',LS.get('lib',[]).map(x=>`=== ${x.title} ===\n${x.text}\n`).join('\n'),'text/plain')}
+function bk(){dl('ai-os-backup.json',JSON.stringify({lib:LS.get('lib',[])}),'application/json')}
+function rs(i){const f=i.files[0];if(!f)return;f.text().then(t=>{try{LS.set('lib',JSON.parse(t).lib||[]);lib();toast('Restored')}catch(e){toast('Invalid backup')}})}
+
+/* ---------- Export ---------- */
+function cp(id){const t=$(id).value;if(!t)return;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{$(id).select();document.execCommand('copy')});toast('Copied')}
+function txt(id){const t=$(id).value;if(t)dl('prompt.txt',t,'text/plain')}
+function pdf(id){const t=$(id).value;if(!t)return;const w=window.open('','_blank');if(!w)return toast('Allow pop-ups to export PDF');
+ w.document.write(`<title>Prompt</title><body style="font-family:Arial;padding:40px;line-height:1.6"><h2>AI Business OS Prompt</h2><pre style="white-space:pre-wrap;font:inherit">${esc(t)}</pre>`);w.document.close();setTimeout(()=>w.print(),300)}
+
+/* ---------- CSV Lead Analyzer ---------- */
+let LEADS=[],HEAD=[];
+function parseCSV(s){const r=[];let row=[],f='',q=false;for(let i=0;i<s.length;i++){const c=s[i];
+ if(q){if(c=='"'&&s[i+1]=='"'){f+='"';i++}else if(c=='"')q=false;else f+=c}
+ else if(c=='"')q=true;else if(c==','){row.push(f);f=''}else if(c=='\n'||c=='\r'){if(c=='\r'&&s[i+1]=='\n')i++;row.push(f);r.push(row);row=[];f=''}else f+=c}
+ if(f||row.length){row.push(f);r.push(row)}return r.filter(x=>x.some(y=>y.trim()))}
+function csvFile(i){const f=i.files[0];if(f)f.text().then(csvGo)}
+function csvGo(t){const d=parseCSV(t||'');if(d.length<2)return toast('Need a header row plus data');
+ HEAD=d[0].map(h=>h.trim());const col=re=>HEAD.findIndex(h=>re.test(h.toLowerCase()));
+ const ie=col(/e-?mail/),ip=col(/phone|mobile|cell|tel/),inm=col(/name/),ic=col(/city|town/),ia=col(/address|street/);
+ const seen=new Set();let dup=0;
+ LEADS=d.slice(1).map(r=>{const e=(r[ie]||'').trim().toLowerCase(),p=(r[ip]||'').replace(/\D/g,''),n=(r[inm]||'').trim();
+  const ve=/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/.test(e),vp=p.length>=10;let s=(ve?30:0)+(vp?30:0)+(n?20:0)+((r[ic]||r[ia]||'').trim()?20:0);
+  const key=e||p;let isD=false;if(key){if(seen.has(key)){isD=true;dup++}seen.add(key)}
+  return{r,s,ve,vp,isD,tier:s>=70?'Hot':s>=40?'Warm':'Cold'}});
+ const cnt=k=>LEADS.filter(l=>l.tier===k).length,c=ic>=0?{}:null;
+ if(c)LEADS.forEach(l=>{const v=(l.r[ic]||'').trim();if(v)c[v]=(c[v]||0)+1});
+ const top=c?Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,5):[];
+ $('cres').innerHTML=`<div class="card"><h2>Results</h2><div class="stat"><div><b>${LEADS.length}</b><span>Total leads</span></div><div><b class="hot">${cnt('Hot')}</b><span>Hot</span></div><div><b class="warm">${cnt('Warm')}</b><span>Warm</span></div><div><b class="cold">${cnt('Cold')}</b><span>Cold</span></div><div><b>${LEADS.filter(l=>l.ve).length}</b><span>Valid emails</span></div><div><b>${LEADS.filter(l=>l.vp).length}</b><span>Valid phones</span></div><div><b>${dup}</b><span>Duplicates</span></div></div>
+ ${top.length?'<p class="sub"><b>Top cities:</b> '+top.map(x=>esc(x[0])+' ('+x[1]+')').join(' · ')+'</p>':''}
+ <div class="scroll"><table><tr>${HEAD.map(h=>'<th>'+esc(h)+'</th>').join('')}<th>Score</th><th>Tier</th></tr>${LEADS.slice(0,100).map(l=>'<tr>'+HEAD.map((h,i)=>'<td>'+esc(l.r[i]||'')+'</td>').join('')+`<td>${l.s}</td><td class="${l.tier.toLowerCase()}">${l.tier}${l.isD?' (dup)':''}</td></tr>`).join('')}</table></div>
+ <div class="row"><button class="btn sm" onclick="csvOut()">Download cleaned CSV</button><button class="btn sm ghost" onclick="csvPrompt(${cnt('Hot')},${cnt('Warm')},${cnt('Cold')})">Create outreach prompt</button></div></div>`}
+function csvOut(){const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+ dl('leads-scored.csv',[[...HEAD,'Score','Tier'].map(q).join(','),...LEADS.filter(l=>!l.isD).sort((a,b)=>b.s-a.s).map(l=>[...HEAD.map((h,i)=>l.r[i]||''),l.s,l.tier].map(q).join(','))].join('\n'),'text/csv')}
+function csvPrompt(h,w,c){$('out').value=`Act as a lead nurturing and sales strategist.\n\nTASK: Build a follow-up plan for a lead list with ${LEADS.length} contacts: ${h} hot, ${w} warm, ${c} cold.\n\nDELIVERABLES:\n1. A distinct outreach strategy per tier (channel, cadence, timing).\n2. A call script, text message, and email for each tier.\n3. Objection handling for the 5 most likely objections.\n4. A 14-day follow-up calendar.\n5. KPIs to track (contact rate, appointment rate, conversion).\n\nTONE: Professional and friendly\nOUTPUT: Clear headings and ready-to-use copy.`;go('gen');score('out','sc','scb')}
+
+/* ---------- Navigation / theme ---------- */
+const VIEWS=[['gen','✍️ Generators','Build precision prompts for any business task'],['mkt','🛒 Prompt Marketplace','Search 500+ preloaded prompts'],['lib','📚 Template Library','Saved templates stored locally in your browser'],['opt','🎯 Optimizer & Score','Improve any prompt and see its quality score'],['csv','📊 CSV Lead Analyzer','Score, clean and segment lead lists']];
+function go(v){document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id=='v-'+v));
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+ const x=VIEWS.find(a=>a[0]==v);$('vt').textContent=x[1];$('vs').textContent=x[2];if(v=='lib')lib();if(v=='mkt')mkt()}
+function dark(){document.body.classList.toggle('dark');LS.set('dark',document.body.classList.contains('dark'))}
+(function init(){let h='<small>Tools</small>'+Object.entries(TOOLS).map(([k,t])=>`<button data-t="${k}" onclick="setTool('${k}');go('gen')">${t.n}</button>`).join('')+'<small>Workspace</small>'+VIEWS.slice(1).map(v=>`<button data-v="${v[0]}" onclick="go('${v[0]}')">${v[1]}</button>`).join('');
+ $('nav').innerHTML=h;$('mc').innerHTML='<option value="">All categories</option>'+Object.keys(CATS).map(c=>`<option>${c}</option>`).join('');
+ if(LS.get('dark',false))document.body.classList.add('dark');setTool('list');go('gen')})();
+</script></body></html>
